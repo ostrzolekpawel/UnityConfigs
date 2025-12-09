@@ -7,13 +7,13 @@ namespace Osiris.Configs
     public abstract class ConfigScriptable<TType, TData> : ScriptableObject, IConfig<TType, TData>
     {
         [SerializeField] protected TData _default;
-        [SerializeField] protected List<ConfigElement> _views;
+        [SerializeField] protected List<ConfigElement> _data;
 
         public TData Default => _default;
 
         public TData GetData(TType type)
         {
-            var element = _views?.Find(x => Equals(x.Type, type));
+            var element = _data?.Find(x => Equals(x.Type, type));
 
             if (element != null)
                 return element.Data;
@@ -23,11 +23,11 @@ namespace Osiris.Configs
 
         private void OnValidate()
         {
-            if (_views.Count > 1)
+            if (_data.Count > 1)
             {
-                foreach (var view in _views)
+                foreach (var view in _data)
                 {
-                    var count = _views.FindAll(x => x.Type.Equals(view.Type)).Count;
+                    var count = _data.FindAll(x => x.Type.Equals(view.Type)).Count;
                     if (count > 1)
                     {
                         throw new ArgumentException($"An item with the same key ({view.Type}) has already been added.");
