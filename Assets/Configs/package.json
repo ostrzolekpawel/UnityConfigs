@@ -1,0 +1,10 @@
+{
+  "name": "com.osirisgames.configs",
+  "displayName": "Configs",
+  "version": "1.0.0",
+  "description": "Simple custom implementation of configs",
+  "keywords": [],
+  "category": "Tools",
+  "dependencies": {
+  }
+}
