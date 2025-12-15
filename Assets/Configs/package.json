@@ -1,6 +1,7 @@
 {
   "name": "com.osirisgames.configs",
   "displayName": "Configs",
+  "author": { "name": "Osiris" },
   "version": "1.0.0",
   "description": "Simple custom implementation of configs",
   "keywords": [],
