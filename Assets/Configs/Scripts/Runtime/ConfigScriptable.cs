@@ -9,9 +9,9 @@ namespace Osiris.Configs
         [SerializeField] protected TData _default;
         [SerializeField] protected List<ConfigElement> _data;
 
-        public TData Default => _default;
+        public virtual TData Default => _default;
 
-        public TData GetData(TType type)
+        public virtual TData GetData(TType type)
         {
             var element = _data?.Find(x => Equals(x.Type, type));
 
@@ -21,7 +21,7 @@ namespace Osiris.Configs
             return _default;
         }
 
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             if (_data.Count > 1)
             {
