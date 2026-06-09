@@ -16,9 +16,34 @@ namespace Osiris.Configs
             var element = _data?.Find(x => Equals(x.Type, type));
 
             if (element != null)
+            {
                 return element.Data;
+            }
 
             return _default;
+        }
+
+        public virtual IReadOnlyList<TData> GetData(Func<TData, bool> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
+            var result = new List<TData>();
+
+            if (_data != null)
+            {
+                foreach (var element in _data)
+                {
+                    if (predicate(element.Data))
+                    {
+                        result.Add(element.Data);
+                    }
+                }
+            }
+
+            return result;
         }
 
         protected virtual void OnValidate()

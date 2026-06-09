@@ -115,6 +115,25 @@ Assign `WeaponConfig` to the field in the Inspector and you're done.
 
 ---
 
+## Querying
+
+Besides the single key lookup, you can pull data out by a predicate - like a `WHERE`
+clause in SQL. The predicate runs over the data inside the config; the internal
+collection and its keys are never exposed - you only get back a read-only list of results.
+
+```csharp
+// WHERE: every weapon that hits for 30 or more
+IReadOnlyList<WeaponData> heavy = _weaponConfig.GetData(w => w.Damage >= 30);
+
+// SELECT *: an always-true predicate returns the whole set
+IReadOnlyList<WeaponData> all = _weaponConfig.GetData(_ => true);
+```
+
+The returned `IReadOnlyList<TData>` is a fresh list, so the config's internal data stays
+encapsulated. Passing a `null` predicate throws `ArgumentNullException`.
+
+---
+
 ## API Reference
 
 ### `IConfig<TType, TData>`
@@ -123,6 +142,7 @@ Assign `WeaponConfig` to the field in the Inspector and you're done.
 |--------|-------------|
 | `TData Default` | Fallback value returned when the key is not found |
 | `TData GetData(TType type)` | Returns data mapped to `type`, or `Default` if missing |
+| `IReadOnlyList<TData> GetData(Func<TData, bool> predicate)` | Returns all data entries matching the predicate (`WHERE`). Throws `ArgumentNullException` if `predicate` is `null` |
 
 ### `ConfigScriptable<TType, TData>`
 
